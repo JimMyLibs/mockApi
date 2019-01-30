@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mockjs": "^1.0.1-beta3"
+  }
+}
