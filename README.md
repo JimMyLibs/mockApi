@@ -15,7 +15,7 @@ mock模拟数据接口
 │           └── utils/      // 该规则包的工具包
 │               ├── api.js      // Mockjs Api一览表
 │               └── index.js        // 工具包内容
-├── index.js        // 程序入口
+├── index.js        // 程序入口lj
 ├── LICENSE     // 开原协议
 ├── node_modules/       // 依赖包
 ├── package.json        // 依赖包
@@ -23,6 +23,7 @@ mock模拟数据接口
 ```
 
 ### Mockjs Api一览表
+> 文件路径：app\rules\jim\utils\api.js
 ```
 // Basic：基础数据类型
 'boolean': Random.boolean(),// 布尔型       // ( min, max, current ):(1, 9, true)
