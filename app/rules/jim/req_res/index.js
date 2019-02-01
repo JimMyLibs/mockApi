@@ -7,9 +7,8 @@ const camelCase = (string) => {
     })
 }
 export default (app) => {
-    app.post('/jim/url_fn/*', (req, res, next) => {
+    app.post('*', (req, res, next) => {
         let { method, path, query, body, headers, headers: { origin } } = req;
-        path = path.split('/jim/url_fn/')[1];
         const arr = camelCase(path).split('/').filter(item => !!item);
         console.log('请求地址', path, arr)
         setTimeout(() => {
@@ -21,7 +20,6 @@ export default (app) => {
                 console.log('请求错误',err)
                 let data = {
                     code: 200,
-                    rule: 'jim/url_fn',
                     msg: '接口不在服务区',
                     method, path, query, body, headers, origin,
                 }

@@ -1,11 +1,12 @@
 import Mock from 'mockjs'
-import { getErrMsg, getMore, getMoreImg, } from '../utils/index'
+import { getErrMsg, getMore, getMoreImg } from '../utils/index'
+import { detail } from '../utils/api'
 const Random = Mock.Random;
 
 // 配置API接口地址
 const example = {
-    getData: (res, data = {}, args = { ret: '100000', success: '' }) => {
-        if (args.ret == '100000') {
+    getData: (res, data = {}, args = { ret: '10000', success: '' }) => {
+        if (args.ret == '10000') {
             const msg = Mock.mock({
                 ret: args.ret,
                 message: args.success ? ('模拟数据：' + args.success) : '模拟数据',
@@ -24,8 +25,8 @@ const example = {
 }
 
 export default {
-    app: {
-        index: (res, args) => {// 接口: /app/index/list
+    index: {
+        hd: (res, args) => {// 接口: /app/index/list
             example.getData(res, {
                 'detail': {
                     'image': Random.image(),
@@ -47,6 +48,12 @@ export default {
                 "totalCount": Random.integer(1, 9) * 10,
                 "totalPage": 5
             })
-        }
+        },
+        bdList: (res) => {
+            example.getData(res)
+        },
+        all: (res) => {
+            example.getData(res, detail)
+        },
     }
 }
