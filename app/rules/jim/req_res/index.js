@@ -1,10 +1,10 @@
 import rule from './rule'
 
 export default (req, res) => {
-    const { method, path, query, body, headers } = req;
+    const { method, path, query, body, body: { mock }, headers } = req;
     setTimeout(() => {
         try {
-            rule.index.default(res, body);
+            rule.index.default(res, mock);
         } catch (err) {
             console.log('请求错误', err)
             let data = {

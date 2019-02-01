@@ -23,14 +23,50 @@ const example = {
         }
     },
 }
-
+/******************************************** 数组类型：constructor *************************************************/
+const isArray = function (arr) {
+    return arr.constructor == Array;
+}
+/******************************************** 对象类型：constructor *************************************************/
+const isObject = function (obj) {
+    return obj.constructor == Object;
+}
+const loopArr = (arr) => {
+    return arr.map(item=>{
+        if(isObject(item)){// 对象
+            console.log('对象2',item)
+            loop(item)
+        }else if(isArray(item)){// 数组
+            console.log('数组2',item)
+            loopArr(item)
+        }else{
+            console.log('进来了2',item)
+            return '456'
+        }
+    })
+}
+const loop = (args) => {
+    Object.keys(args).map(item=>{
+        if(isObject(args[item])){// 对象
+            console.log('对象1',item)
+            loop(args[item])
+        }else if(isArray(args[item])){// 数组
+            console.log('数组1',item)
+            args[item] = loopArr(args[item])
+        }else{
+            console.log('进来了1',item)
+            args[item] = '123'
+        }
+    })
+    return args;
+}
 export default {
     index: {
-        default: (res) => {
-            example.getData(res, detail)
-        },
-        all: (res) => {
-            example.getData(res, detail)
+        default: (res, args) => {
+            console.log('args',args)
+            const msg = loop(args);
+            console.log('msg',msg)
+            example.getData(res, msg)
         },
     }
 }
