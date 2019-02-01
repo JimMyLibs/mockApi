@@ -31,48 +31,55 @@ const isArray = function (arr) {
 const isObject = function (obj) {
     return obj.constructor == Object;
 }
-const getRandom = (type, totalNum, pageSize = 10) => {
+const getRandom = (type, totalNum, curPage = 1, pageSize = 10) => {
     console.log('getRandom______', type, totalNum)
     if (totalNum) {
-        return getMore(type).slice(0, pageSize)
+        if(curPage == parseInt(totalNum / pageSize)){
+            return getMore(type).slice(0, parseInt(totalNum % pageSize), parseInt(totalNum % pageSize))
+        }else{
+            return getMore(type).slice(0, pageSize, pageSize)
+        }
     } else {
         return Random[type]()
     }
 }
-const loopArr = (arr, totalNum, pageSize) => {
+const loopArr = (arr, totalNum, curPage, pageSize) => {
     let item = arr[0];    
     if (isObject(item)) {// 对象
         console.log('对象2', item)
-        return loop(item, totalNum, pageSize, true)
+        return loop(item, totalNum, curPage, pageSize, true)
     } else if (isArray(item)) {// 数组
         console.log('数组2', item)
-        return loopArr(item, totalNum, pageSize, true)
+        return loopArr(item, totalNum, curPage, pageSize, true)
     } else {
         console.log('进来了2', item)// 狸猫换太子，否则就变成二维数组了
-        return Random[item] ? getRandom(item, totalNum, pageSize) : item
+        return Random[item] ? getRandom(item, totalNum, curPage, pageSize) : item
     }
 }
-const loop = (args, totalNum = 0, pageSize = 0, isList = false) => {
+const loop = (args, totalNum = 0, curPage = 1, pageSize = 0, isList = false) => {
     Object.keys(args).map(item => {
         if (isObject(args[item])) {// 对象
             console.log('对象1', item)
             if (item == 'totalNum') {// 总条数
                 totalNum = args[Object.entries(args[item])[0][0]] = Object.entries(args[item])[0][1];
                 delete args[item];
+            } else if (item == 'curPage') {// 总页码
+                curPage = args[Object.entries(args[item])[0][0]] = Object.entries(args[item])[0][1];
+                delete args[item];
             } else if (item == 'pageSize') {// 总页码
                 pageSize = args[Object.entries(args[item])[0][0]] = Object.entries(args[item])[0][1];
                 delete args[item];
-            } else {
+            }  else {
                 loop(args[item])
             }
         } else if (isArray(args[item])) {// 数组
             console.log('数组1', item)
-            args[item] = loopArr(args[item], totalNum, pageSize)
+            args[item] = loopArr(args[item], totalNum, curPage, pageSize)
         } else {
             console.log('进来了1', args, item, isList ? '是' : '否', '从数组中来')
             if (isList) {// 数组里面的项目
                 if(Random[args[item]]){// 支持此语法
-                    args = getRandom(args[item], totalNum, pageSize).map(cell=>{
+                    args = getRandom(args[item], totalNum, curPage, pageSize).map(cell=>{
                         let obj = {};
                         obj[args[item]] = cell;
                         return obj;
