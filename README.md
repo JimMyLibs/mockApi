@@ -1,6 +1,47 @@
 # mockApi
 mock模拟数据接口
 
+### 使用方法
+> 默认选择作者jim名下的req_res模拟规则，详情查看[具体规则](https://github.com/JimMyLibs/mockApi/tree/master/app/rules/jim/req_res)
+```
+// 作者: jim  规则: req_res
+// 使用方法: 将返回字段及其格式，以请求参数的形式发送给接口
+fetch('http://mock.91525.net:3001/**/**',{
+	mock:{
+		id: 'id',
+		name: 'cname'
+	}
+})
+// 响应信息
+{
+    "ret": "10000",
+    "message": "模拟数据",
+    "data": {
+        "id": "360000201401253686",
+        "name": "马云",
+    }
+}
+```
+> 根据请求参数，选择某个作者及其名下的模拟规则，详情查看[具体规则](https://github.com/JimMyLibs/mockApi/tree/master/app/rules/jim/url_fn)
+```
+// 作者: jim  规则: req_res
+// 使用方法: 将返回字段及其格式，以请求参数的形式发送给接口
+fetch('http://mock.91525.net:3001/index/all',{
+	"mock":{
+		"auth":"jim",
+		"rule":"url_fn"
+	}
+})
+// 响应信息
+{
+    "ret": "10000",
+    "message": "模拟数据",
+    "data": {
+        // 自己配置
+    }
+}
+```
+
 ### 目录结构
 ```
 ├── app/        // 业务代码
