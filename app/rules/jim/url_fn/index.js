@@ -6,28 +6,23 @@ const camelCase = (string) => {
         return letter.toUpperCase()
     })
 }
-export default (app) => {
-    app.post('/jim/url_fn/*', (req, res, next) => {
-        let { method, path, query, body, headers, headers: { origin } } = req;
-        path = path.split('/jim/url_fn/')[1];
-        const arr = camelCase(path).split('/').filter(item => !!item);
-        console.log('请求地址', path, arr)
-        setTimeout(() => {
-            try {
-                arr.reduce((sum, item, index) => {
-                    return sum[item]
-                }, rule)(res, body)
-            } catch (err) {                
-                console.log('请求错误',err)
-                let data = {
-                    code: 200,
-                    rule: 'jim/url_fn',
-                    msg: '接口不在服务区',
-                    method, path, query, body, headers, origin,
-                }
-                res.send(data)  
-                next();                  
+export default (req, res) => {
+    const { method, path, query, body, headers } = req;
+    const arr = camelCase(path).split('/').filter(item => !!item);
+    setTimeout(() => {
+        try {
+            arr.reduce((sum, item, index) => {
+                return sum[item]
+            }, rule)(res, body)
+        } catch (err) {                
+            console.log('请求错误',err)
+            let data = {
+                code: 200,
+                msg: '接口不在服务区',
+                errDetail: 'jim/url_fn下没有该接口对应的方法',
+                method, path, query, body, headers,
             }
-        }, 100)
-    })
+            res.send(data)             
+        }
+    }, 100)
 }

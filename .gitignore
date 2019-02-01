@@ -59,3 +59,8 @@ typings/
 
 # next.js build output
 .next
+
+
+# 自定义文件
+.ssh
+.ssh.pub

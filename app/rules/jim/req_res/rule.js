@@ -25,7 +25,10 @@ const example = {
 }
 
 export default {
-    jim: {
+    index: {
+        default: (res) => {
+            example.getData(res, detail)
+        },
         all: (res) => {
             example.getData(res, detail)
         },
