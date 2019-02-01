@@ -31,19 +31,19 @@ const isArray = function (arr) {
 const isObject = function (obj) {
     return obj.constructor == Object;
 }
-const getRandom = (type, totalNum, curPage = 1, pageSize = 10) => {
+const getRandom = (type, totalNum, curPage = 1, pageSize = 10) => {// 生成模拟数据
     console.log('getRandom______', type, totalNum)
-    if (totalNum) {
+    if (totalNum) {// 数组类型模拟
         if(curPage == parseInt(totalNum / pageSize)){
             return getMore(type).slice(0, parseInt(totalNum % pageSize), parseInt(totalNum % pageSize))
         }else{
             return getMore(type).slice(0, pageSize, pageSize)
         }
-    } else {
+    } else {// 数值类型模拟: 待处理
         return Random[type]()
     }
 }
-const loopArr = (arr, totalNum, curPage, pageSize) => {
+const loopArr = (arr, totalNum, curPage, pageSize) => {// 二次数组递归
     let item = arr[0];    
     if (isObject(item)) {// 对象
         console.log('对象2', item)
@@ -56,7 +56,10 @@ const loopArr = (arr, totalNum, curPage, pageSize) => {
         return Random[item] ? getRandom(item, totalNum, curPage, pageSize) : item
     }
 }
-const loop = (args, totalNum = 0, curPage = 1, pageSize = 0, isList = false) => {
+const pageAttrPre = (arr) => {// totalNum/curPage/pageSize 在数组中前置: 待处理
+
+}
+const loop = (args, totalNum = 0, curPage = 1, pageSize = 0, isList = false) => {// 一次递归
     Object.keys(args).map(item => {
         if (isObject(args[item])) {// 对象
             console.log('对象1', item)
