@@ -1,6 +1,5 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import Mock from 'mockjs'
 import rules from './rules'
 
 const app = express()
@@ -24,7 +23,7 @@ app.all('*', (req, res, next) => {
         next()
     }
 })
-// use node mock file，使用当前node路由文件
-rules(app, Mock)
+
+rules(app)
 
 app.listen(3001, () => console.log(`Example app listening on port 3001`))
