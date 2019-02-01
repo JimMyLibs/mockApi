@@ -31,31 +31,47 @@ const isArray = function (arr) {
 const isObject = function (obj) {
     return obj.constructor == Object;
 }
+const getRandom = (type, totalNum, pageSize = 10) => {
+    console.log('getRandom______',type,totalNum)
+    if(totalNum){
+        return getMore(type,totalNum,totalNum)
+    }else{        
+        return Random[type]()
+    }
+}
 const loopArr = (arr) => {
-    return arr.map(item=>{
-        if(isObject(item)){// 对象
-            console.log('对象2',item)
-            loop(item)
-        }else if(isArray(item)){// 数组
-            console.log('数组2',item)
-            loopArr(item)
-        }else{
-            console.log('进来了2',item)
-            return '456'
+    return arr.map(item => {
+        if (isObject(item)) {// 对象
+            console.log('对象2', item)
+            return loop(item)
+        } else if (isArray(item)) {// 数组
+            console.log('数组2', item)
+            return loopArr(item)
+        } else {
+            console.log('进来了2', item)
+            return Random[item] ? getRandom(item) : item
         }
     })
 }
 const loop = (args) => {
-    Object.keys(args).map(item=>{
-        if(isObject(args[item])){// 对象
-            console.log('对象1',item)
-            loop(args[item])
-        }else if(isArray(args[item])){// 数组
-            console.log('数组1',item)
+    Object.keys(args).map(item => {
+        if (isObject(args[item])) {// 对象
+            console.log('对象1', item)
+            if(item == 'totalNum'){// 总条数
+                args[Object.entries(args[item])[0][0]] = Object.entries(args[item])[0][1];
+                delete args[item];
+            }else if(item == 'pageSize'){// 总页码
+                args[Object.entries(args[item])[0][0]] = Object.entries(args[item])[0][1];
+                delete args[item];            
+            }else{
+                loop(args[item])
+            }
+        } else if (isArray(args[item])) {// 数组
+            console.log('数组1', item)
             args[item] = loopArr(args[item])
-        }else{
-            console.log('进来了1',item)
-            args[item] = '123'
+        } else {
+            console.log('进来了1', item)
+            args[item] = Random[args[item]] ? getRandom(args[item]) : args[item]
         }
     })
     return args;
@@ -63,9 +79,9 @@ const loop = (args) => {
 export default {
     index: {
         default: (res, args) => {
-            console.log('args',args)
+            console.log('args', args)
             const msg = loop(args);
-            console.log('msg',msg)
+            console.log('msg', msg)
             example.getData(res, msg)
         },
     }
