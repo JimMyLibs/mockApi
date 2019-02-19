@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 import { getErrMsg, getMore, getMoreImg } from '../utils/index'
+import { isArray, isObject } from '../utils/isType'
 import { detail } from '../utils/api'
 const Random = Mock.Random;
 
@@ -22,14 +23,6 @@ const example = {
             res.send(msg)
         }
     },
-}
-/******************************************** 数组类型：constructor *************************************************/
-const isArray = function (arr) {
-    return arr.constructor == Array;
-}
-/******************************************** 对象类型：constructor *************************************************/
-const isObject = function (obj) {
-    return obj.constructor == Object;
 }
 const getArrRandom = (type, totalNum, curPage, pageSize) => {// 生成模拟数据: 数组类型模拟
     console.log('getArrRandom______', type, totalNum)
@@ -56,10 +49,10 @@ const loopArr = (arr, totalNum, curPage, pageSize) => {// 二次数组递归
     let item = arr[0];    
     if (isObject(item)) {// 对象
         console.log('对象2', item)
-        return loop(item, totalNum, curPage, pageSize, true)
+        return getArrRandom(item, totalNum, curPage, pageSize)
     } else if (isArray(item)) {// 数组
         console.log('数组2', item)
-        return loopArr(item, totalNum, curPage, pageSize, true)
+        return loopArr(item, totalNum, curPage, pageSize)
     } else {
         console.log('进来了2', item)// 狸猫换太子，否则就变成二维数组了
         return Random[item] ? getArrRandom(item, totalNum, curPage, pageSize) : [item]
@@ -79,8 +72,8 @@ const loop = (args, totalNum, curPage, pageSize, isInList = false) => {// 一次
     const argsKeys = pageAttrPre(Object.keys(args));
     const hasArr = argsKeys.some(item => isArray(args[item]));// 字段中存在数组
     argsKeys.map(item => {
+        console.log('对象1', item, args, args[item]);
         if (isObject(args[item])) {// 对象
-            console.log('对象1', item);
             if(hasArr){
                 // 自定义totalNum,curPage,pageSize字段
                 if (item == 'totalNum') {// 总条数
@@ -100,38 +93,26 @@ const loop = (args, totalNum, curPage, pageSize, isInList = false) => {// 一次
             console.log('数组1', item)
             args[item] = loopArr(args[item], totalNum, curPage, pageSize)
         } else {
-            console.log('进来了1', args, item, isInList ? '是' : '否', '从数组中来')
-            if (isInList) {// 数组里面的项目
-                if(Random[args[item]]){// 支持此语法
-                    args = getArrRandom(args[item], totalNum, curPage, pageSize).map(cell=>{
-                        let obj = {};
-                        obj[args[item]] = cell;
-                        return obj;
-                    })
-                }else{
-                    args = args[item]
-                }
-            } else {              
-                // totalNum,curPage,pageSize 字段缺失
-                if(!argsKeys.includes('totalNum')){
-                    args['totalNum'] = Random.integer(0,100);
-                }
-                if(!argsKeys.includes('curPage')){
-                    args['curPage'] = 1;
-                }
-                if(!argsKeys.includes('pageSize')){
-                    args['pageSize'] = 10;
-                }
-                // totalNum,curPage,pageSize 字段未自定义
-                if (item == 'totalNum') {// 总条数
-                    totalNum = args[item];
-                } else if (item == 'curPage') {// 总页码
-                    curPage = args[item];
-                } else if (item == 'pageSize') {// 总页码
-                    pageSize = args[item];
-                }else{
-                    args[item] = Random[args[item]] ? getRandom(args[item]) : args[item];
-                }
+            console.log('进来了1', args, item, isInList ? '是' : '否', '从数组中来')           
+            // totalNum,curPage,pageSize 字段缺失
+            if(!argsKeys.includes('totalNum')){
+                args['totalNum'] = Random.integer(0,100);
+            }
+            if(!argsKeys.includes('curPage')){
+                args['curPage'] = 1;
+            }
+            if(!argsKeys.includes('pageSize')){
+                args['pageSize'] = 10;
+            }
+            // totalNum,curPage,pageSize 字段未自定义
+            if (item == 'totalNum') {// 总条数
+                totalNum = args[item];
+            } else if (item == 'curPage') {// 总页码
+                curPage = args[item];
+            } else if (item == 'pageSize') {// 总页码
+                pageSize = args[item];
+            }else{
+                args[item] = Random[args[item]] ? getRandom(args[item]) : args[item];
             }
         }
     })

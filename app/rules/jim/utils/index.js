@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import { isArray, isObject } from '../utils/isType'
 const Random = Mock.Random;
 
 /*********************************** 错误码 ***********************************/
@@ -24,7 +25,19 @@ export const getMore = function (type, min = '', max = '', size=50) {
         if (min) {
             items = items.concat([Random[type](min, max)]);
         } else {
-            items = items.concat([Random[type]()]);
+            if (isObject(type)) {// 对象
+                console.log('getMore——对象', type)
+                Object.keys(type).map(cell=>{
+                    type[cell] = Random[type[cell]] ? Random[type[cell]]() : type[cell];
+                })
+                items = items.concat([type]);
+            } else if (isArray(type)) {// 数组
+                console.log('getMore——数组', type)
+                
+            } else {
+                console.log('getMore——普通', type)// 狸猫换太子，否则就变成二维数组了
+                items = items.concat([Random[type]()]);
+            }
         }
     }
     return items;
