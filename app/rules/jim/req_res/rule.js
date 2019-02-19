@@ -33,6 +33,7 @@ const isObject = function (obj) {
 }
 const getArrRandom = (type, totalNum, curPage, pageSize) => {// 生成模拟数据: 数组类型模拟
     console.log('getArrRandom______', type, totalNum)
+    totalNum = totalNum || Random.integer(0,100);
     if(totalNum && pageSize){
         if(curPage == parseInt(totalNum / pageSize) + 1){
             return getMore(type).slice(0, parseInt(totalNum % pageSize))
@@ -42,7 +43,6 @@ const getArrRandom = (type, totalNum, curPage, pageSize) => {// 生成模拟数�
             return getMore(type).slice(0, pageSize, pageSize)
         }
     }else{
-        totalNum = totalNum || Random.integer(0,100);
         if(!pageSize){
             return getMore(type).slice(0, totalNum)
         }
@@ -112,7 +112,17 @@ const loop = (args, totalNum, curPage, pageSize, isInList = false) => {// 一次
                     args = args[item]
                 }
             } else {              
-                // totalNum,curPage,pageSize字段未自定义
+                // totalNum,curPage,pageSize 字段缺失
+                if(!argsKeys.includes('totalNum')){
+                    args['totalNum'] = Random.integer(0,100);
+                }
+                if(!argsKeys.includes('curPage')){
+                    args['curPage'] = 1;
+                }
+                if(!argsKeys.includes('pageSize')){
+                    args['pageSize'] = 10;
+                }
+                // totalNum,curPage,pageSize 字段未自定义
                 if (item == 'totalNum') {// 总条数
                     totalNum = args[item];
                 } else if (item == 'curPage') {// 总页码
