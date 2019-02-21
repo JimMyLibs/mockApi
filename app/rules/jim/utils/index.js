@@ -37,23 +37,27 @@ export const getMore = function (type, min = '', max = '', size=10) {
                 // console.log('getMore__________________________________数组', item)
                 
             } else {
-                // console.log('getMore__________________________________普通', item)// 狸猫换太子，否则就变成二维数组了
+                console.log('getMore__________________________________普通1', item)// 狸猫换太子，否则就变成二维数组了
                 item = Random[item]();
+                console.log('getMore__________________________________普通2', item)// 狸猫换太子，否则就变成二维数组了
             }
         }
     })
     return items;
 }
 /*********************************** 图片专用：万中取一 ***********************************/
-export const getMoreImg = function (type, min = Random.integer(100,300)+'x'+Random.integer(100,700), max = Random.color(), size=1) {
+export const getMoreImg = function (width = 200, height = 200, color = Random.color(), ext = 'png', text = '', size=50) {
     let items = new Array;
     for (let i = 0; i < size; i++) {
-        if (min) {
-            items = items.concat([Random[type](min, max)]);
-        } else {
-            items = items.concat([Random[type]()]);
-        }
+        items = items.concat('image');
     }
+    items.map(item=> {
+        if (min) {
+            item = Random['image'](width+'x'+height,color,ext,text);
+        } else {
+            item = Random['image'](Random.integer(100,300)+'x'+Random.integer(100,700),Random.color(),ext,text);
+        }
+    })
     return items;
 }
 

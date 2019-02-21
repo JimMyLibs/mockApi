@@ -72,7 +72,7 @@ const loop = (args, totalNum, curPage, pageSize, isInList = false) => {// 一次
     const argsKeys = pageAttrPre(Object.keys(args));
     const hasArr = argsKeys.some(item => isArray(args[item]));// 字段中存在数组
     argsKeys.map(item => {
-        console.log('对象1', item, args, args[item]);
+        console.log('对象1', item, args[item]);
         if (isObject(args[item])) {// 对象
             if(hasArr){
                 // 自定义totalNum,curPage,pageSize字段
