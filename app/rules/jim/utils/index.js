@@ -24,25 +24,25 @@ export const getMore = function (type, min = '', max = '', size=10) {
     for (let i = 0; i < size; i++) {
         items = items.concat(JSON.parse(JSON.stringify(type)));
     }
-    items.map(item=> {
+    items.map((item, index)=> {
         if (min) {
             item = Random[item](min, max);
         } else {
             if (isObject(item)) {// 对象
                 Object.keys(item).map(cell=>{
-                    // console.log('getMore__________________________________对象', item, index, !!Random[item[cell]])
+                    // console.log('getMore__________________________________对象', index, item, !!Random[item[cell]])
                     item[cell] = Random[item[cell]] ? Random[item[cell]]() : item[cell];
                 })
             } else if (isArray(item)) {// 数组
                 // console.log('getMore__________________________________数组', item)
                 
             } else {
-                console.log('getMore__________________________________普通1', item)// 狸猫换太子，否则就变成二维数组了
-                item = Random[item]();
-                console.log('getMore__________________________________普通2', item)// 狸猫换太子，否则就变成二维数组了
+                // console.log('getMore__________________________________普通1', item)// 狸猫换太子，否则就变成二维数组了
+                items[index] = Random[item]();
             }
         }
     })
+    console.log('getMore:::::::::::::::::', items)
     return items;
 }
 /*********************************** 图片专用：万中取一 ***********************************/
