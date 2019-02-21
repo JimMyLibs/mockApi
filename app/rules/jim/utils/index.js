@@ -17,35 +17,37 @@ export const getErrMsg = function (ret) {
         // 订单：10020-10029      
     }
 }
-/*********************************** 数组专用：万中取一 ***********************************/
+/*********************************** 通用：万中取一 ***********************************/
 // 数据 type:数据类型,min:最小值,max:最大值,size:枚举数量
-export const getMore = function (type, min = '', max = '', size=50) {
+export const getMore = function (type, min = '', max = '', size=10) {
     let items = new Array;
-    for (let i = 1; i < size + Math.ceil(Math.random() * size.toString().length); i++) {
+    for (let i = 0; i < size; i++) {
+        items = items.concat(JSON.parse(JSON.stringify(type)));
+    }
+    items.map(item=> {
         if (min) {
-            items = items.concat([Random[type](min, max)]);
+            item = Random[item](min, max);
         } else {
-            if (isObject(type)) {// 对象
-                console.log('getMore——对象', type)
-                Object.keys(type).map(cell=>{
-                    type[cell] = Random[type[cell]] ? Random[type[cell]]() : type[cell];
+            if (isObject(item)) {// 对象
+                Object.keys(item).map(cell=>{
+                    // console.log('getMore__________________________________对象', item, index, !!Random[item[cell]])
+                    item[cell] = Random[item[cell]] ? Random[item[cell]]() : item[cell];
                 })
-                items = items.concat([type]);
-            } else if (isArray(type)) {// 数组
-                console.log('getMore——数组', type)
+            } else if (isArray(item)) {// 数组
+                // console.log('getMore__________________________________数组', item)
                 
             } else {
-                console.log('getMore——普通', type)// 狸猫换太子，否则就变成二维数组了
-                items = items.concat([Random[type]()]);
+                // console.log('getMore__________________________________普通', item)// 狸猫换太子，否则就变成二维数组了
+                item = Random[item]();
             }
         }
-    }
+    })
     return items;
 }
-// 图片
+/*********************************** 图片专用：万中取一 ***********************************/
 export const getMoreImg = function (type, min = Random.integer(100,300)+'x'+Random.integer(100,700), max = Random.color(), size=1) {
     let items = new Array;
-    for (let i = 1; i < size + Math.ceil(Math.random() * size.toString().length); i++) {
+    for (let i = 0; i < size; i++) {
         if (min) {
             items = items.concat([Random[type](min, max)]);
         } else {
