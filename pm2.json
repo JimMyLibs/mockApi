@@ -1,0 +1,30 @@
+{
+    "apps": [
+        {
+            "name": "mockapi",
+            "script": "index.js",
+            "cwd": "./",
+            "watch": [
+                "index.js",
+                "app"
+            ],
+            "ignore_watch": [
+                "node_modules",
+                "logs"
+            ],
+            "watch_options": {
+                "usePolling": true,
+                "followSymlinks": false
+            },
+            "log_date_format": "YYYY-MM-DD HH:mm Z",
+            "error_file": "./logs/back-err.log",
+            "out_file": "./logs/back-out.log",
+            "pid_file": "./logs/back-api.pid",
+            "env": {
+                "NODE_ENV": "development",
+                "PORT": 3001,
+                "DEBUG": "./index.js"
+            }
+        }
+    ]
+}
