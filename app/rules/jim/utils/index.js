@@ -4,17 +4,19 @@ const Random = Mock.Random;
 
 /*********************************** 错误码 ***********************************/
 export const getErrMsg = function (ret) {
-    switch (ret) {
-        case 10000: return '成功';
+    switch (ret+'') {
+        case '10000': return '成功';
         // 登录：10000-10009
-        case 10002: return '登录信息过期，请重新登录';
-        case 10003: return 'token过期';
-        case 10004: return '用户未登录，token不存在';
+        case '10002': return '登录信息过期，请重新登录';
+        case '10003': return 'token过期';
+        case '10004': return '用户未登录，token不存在';
         // 图形验证码：10010-10019
-        case 10011: return '验证码过期，请重试';
-        case 10012: return '验证码错误，请重试';
-        case 10013: return '图形验证码失效，请重新获取';
-        // 订单：10020-10029      
+        case '10011': return '验证码过期，请重试';
+        case '10012': return '验证码错误，请重试';
+        case '10013': return '图形验证码失效，请重新获取';
+        // 订单：10020-10029          
+        
+        default : return '未知错误';
     }
 }
 /*********************************** 通用：万中取一 ***********************************/
