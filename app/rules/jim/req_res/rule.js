@@ -6,18 +6,18 @@ const Random = Mock.Random;
 
 // 配置API接口地址
 const example = {
-    getData: (res, data = {}, args = { ret: '10000', message: '' }) => {
-        if (args.ret == '10000') {
+    getData: (res, data = {}, args = { respCode: '0000', message: '' }) => {
+        if (args.respCode == '0000') {
             const msg = {
-                ret: args.ret,
+                respCode: args.respCode,
                 message: args.message ? ('模拟数据：' + args.message) : '模拟数据',
                 data,
             }
             res.send(msg)
         } else {
             const msg = {
-                ret: args.ret,
-                message: getErrMsg(args.ret),
+                respCode: args.respCode,
+                message: getErrMsg(args.respCode),
                 data,
             }
             res.send(msg)
@@ -128,10 +128,22 @@ export default {
     index: {
         default: (res, args) => {
             console.log('args', args)
-            const { data } = args;
+            let argsInit = {
+                message: "",
+                respCode: "0000",
+                data:{},
+            }
+            if(args.respCode){
+                argsInit.respCode = args.respCode;
+                argsInit.message = args.message || '';
+                argsInit.data = args.data || {};
+            }else{
+                argsInit.data = args;
+            }
+            const { data } = argsInit;
             const msg = loop(data);
             // console.log('msg', msg)
-            example.getData(res, msg, args)
+            example.getData(res, msg, argsInit)
         },
     }
 }
