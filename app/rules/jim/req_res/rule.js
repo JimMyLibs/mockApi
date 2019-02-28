@@ -18,7 +18,7 @@ const example = {
             const msg = {
                 respCode: args.respCode,
                 message: getErrMsg(args.respCode),
-                data,
+                data:{},
             }
             res.send(msg)
         }
