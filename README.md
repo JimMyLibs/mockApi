@@ -2,6 +2,22 @@
 mock模拟数据接口
 
 ### 使用方法
+```
+git clone https://github.com/JimMyLibs/mockApi.git
+cd mockApi
+npm install
+// 启动项目
+node index.js
+```
+> 如果想快速调试，请安装nodemon
+```
+npm install -g nodemon
+npm install --save-dev nodemon
+// 启动项目
+nodemon
+```
+
+### 使用规则
 > 默认选择作者jim名下的req_res模拟规则，详情查看[具体规则](https://github.com/JimMyLibs/mockApi/tree/master/app/rules/jim/req_res)
 ```
 // 作者: jim  规则: req_res
