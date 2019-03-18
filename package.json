@@ -4,6 +4,7 @@
     "babel-register": "^6.26.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "mockjs": "^1.0.1-beta3"
+    "mockjs": "^1.0.1-beta3",
+    "randexp": "^0.5.3"
   }
 }

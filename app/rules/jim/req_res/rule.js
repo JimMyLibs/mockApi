@@ -3,7 +3,20 @@ import { getErrMsg, getMore, getMoreImg } from '../utils/index'
 import { isArray, isObject } from '../utils/isType'
 import { detail } from '../utils/api'
 const Random = Mock.Random;
-
+import RandExp from 'randexp'
+import { reg, regFn } from '../utils/regular'
+console.time('身份证')
+const getIdCard = ()=>{
+    let idCard = new RandExp(reg.idCard18).gen();
+    if(regFn.checkID(idCard)){
+        return console.log('成功',idCard,regFn.checkID(idCard))
+    }else{
+        console.log('失败',idCard,regFn.checkID(idCard))
+        return getIdCard();
+    }
+}
+getIdCard();
+console.timeEnd('身份证')
 // 配置API接口地址
 const example = {
     getData: (res, data = {}, args = { ret: '10000', message: '' }) => {
