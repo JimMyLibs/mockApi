@@ -3,40 +3,29 @@ import RandExp from 'randexp'
 import { reg, regFn } from '../utils/regular'
 const Random = Mock.Random;
 
-
 export const getRandom = (type) => {// 生成模拟数据: 数值类型模拟: 待处理
-    console.log('getRandom______', type)
-    if(type == 'phone'){
-        return getPhone();
-    }else if(type == 'username'){
-        return getUsername();
-    }else if(type == 'idCard'){
+    const regKeys = Object.keys(reg);
+    // console.log('getRandom______', type)
+    if(type == 'idCard'){
         return getIdCard();
     }else if(type == 'icon'){
-
+        return Random.image('64x64');
     }else if(type == '未知'){
 
     }else if(type == '未知'){
 
-    }else if(type == '未知'){
-
-    }else if(type == '未知'){
-
+    }else if(regKeys.includes(type)){
+        return getReg(type);
     }else{
         return Random[type] ? Random[type]() : type;
     }
 }
 
-export const getPhone = ()=>{
-    const phone = new RandExp(reg.phone).gen();
-    console.log('手机号',phone)
-    return phone;
-}
-
-export const getUsername = ()=>{
-    const username = new RandExp(reg.username).gen();
-    console.log('用户名',username)
-    return username;
+export const getReg = (type)=>{
+    console.time('正则'+type)
+    const result = new RandExp(reg[type]).gen();
+    console.timeEnd('正则'+type)
+    return result;
 }
 
 let getIdCardCount = 0;
