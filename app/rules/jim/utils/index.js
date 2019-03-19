@@ -5,7 +5,7 @@ const Random = Mock.Random;
 /*********************************** 错误码 ***********************************/
 export const getErrMsg = function (ret) {
     switch (ret+'') {
-        case '10000': return '成功';
+        case '0000': return '成功';
         // 登录：10000-10009
         case '10002': return '登录信息过期，请重新登录';
         case '10003': return 'token过期';
@@ -44,7 +44,7 @@ export const getMore = function (type, min = '', max = '', size=10) {
             }
         }
     })
-    console.log('getMore:::::::::::::::::', items)
+    // console.log('getMore:::::::::::::::::', items)
     return items;
 }
 /*********************************** 图片专用：万中取一 ***********************************/
