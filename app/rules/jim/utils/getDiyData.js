@@ -10,8 +10,8 @@ export const getRandom = (type) => {// 生成模拟数据: 数值类型模拟: �
         return getIdCard();
     }else if(type == 'icon'){
         return Random.image('64x64');
-    }else if(type == '未知'){
-
+    }else if(type == 'detailAddress'){
+        return Random.county(true) + ' ' + Random.cword(2,3) + '路' + Random.integer(0,100) + '号';
     }else if(type == '未知'){
 
     }else if(regKeys.includes(type)){
@@ -30,13 +30,13 @@ export const getReg = (type)=>{
 
 let getIdCardCount = 0;
 export const getIdCard = ()=>{
-    let idCard = new RandExp(reg.idCard18).gen();
+    let idCard = new RandExp(reg.idCard).gen();
     if(regFn.checkID(idCard)){
-        console.log('经过'+getIdCardCount+'次失败，才成功',idCard,regFn.checkID(idCard))
+        console.log('经过'+getIdCardCount+'次失败，才成功',idCard)
         return idCard;
     }else{
         getIdCardCount++;
-        // console.log('失败',idCard,regFn.checkID(idCard),getIdCardCount)
+        // console.log('失败',idCard,getIdCardCount)
         return getIdCard();
     }
 }
