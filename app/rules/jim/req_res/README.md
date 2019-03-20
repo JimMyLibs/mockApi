@@ -1,4 +1,4 @@
-## 本条规则使用说明
+## 本条规则使用说明 
 
 > 分页相关字段命名说明：totalNum,curPage,pageSize
 ```
