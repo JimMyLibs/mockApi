@@ -127,8 +127,8 @@ export default {
         default: (res, args) => {
             // console.log('args', args)
             let argsInit = {
-                message: "",
                 respCode: "0000",
+                message: "",
                 data:{},
             }
             if(args.respCode){

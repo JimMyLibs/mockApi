@@ -9,10 +9,11 @@ export default (req, res) => {
         } catch (err) {
             console.log('请求错误', err)
             let data = {
-                code: 200,
-                msg: '接口不在服务区',
-                errDetail: '规则名称有误,请检查mock.rule',
-                method, path, query, body, headers,
+                respCode: 200,
+                message: '规则名称有误,请检查mock.rule',
+                data: {
+                    detail: err.message
+                }
             }
             res.send(data)
         }

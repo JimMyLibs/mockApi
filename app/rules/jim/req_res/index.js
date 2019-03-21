@@ -8,10 +8,11 @@ export default (req, res) => {
         } catch (err) {
             console.log('请求错误', err)
             let data = {
-                code: 200,
-                msg: '接口不在服务区',
-                errDetail: 'jim/url_fn',
-                method, path, query, body, headers,
+                respCode: 200,
+                message: 'jim/url_fn',
+                data: {
+                    detail: err.message
+                }
             }
             res.send(data)
         }
