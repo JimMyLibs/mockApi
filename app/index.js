@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 app.all('*', (req, res, next) => {
     // Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
     res.header("Access-Control-Allow-Origin", "*")
-    res.header('Access-Control-Allow-Headers', 'Content-Type, token')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, token, version')
     res.header('Access-Control-Allow-Methods', '*')
     res.header('Content-Type', 'application/json;charset=utf-8')
     if (req.method.toUpperCase() === 'OPTIONS') {
