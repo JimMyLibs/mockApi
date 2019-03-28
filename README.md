@@ -1,9 +1,13 @@
 # mockApi
-mock模拟数据接口 [在线体验: demo](http://mock.91525.net)
+mock模拟数据接口
+
+> ### [在线体验: demo](http://mock.91525.net)
+> ### [客户端](https://github.com/JimMyLibs/mockapi-vueTs)
+> ### [服务端](https://github.com/JimMyLibs/mockApi)
 
 > [我要用的字段，你这里面没有！我有新字段需求要提交](https://github.com/JimMyLibs/mockApi/issues/4)
 
-![postman截图](https://note.youdao.com/yws/public/resource/367cb1e7e2dad4b943cdf1c53c776613/xmlnote/C207D409E2FA4DCBB1830984F258EFC3/6942)
+![demo截图](https://raw.githubusercontent.com/JimMyLibs/mockapi-vueTs/master/src/resource/screenshot/mockapi001.png)
 
 ### 使用方法
 ```
@@ -22,8 +26,10 @@ nodemon
 ```
 ---
 
-### 使用规则
+## 使用规则
 > 默认选择作者jim名下的req_res模拟规则，详情查看[具体规则](https://github.com/JimMyLibs/mockApi/tree/master/app/rules/jim/req_res)
+
+### 1. 使用规则一：投桃报李
 ```
 // 作者: jim  规则: req_res
 // 使用方法: 将返回字段及其格式，以请求参数的形式发送给接口
@@ -42,47 +48,6 @@ fetch('http://mock.91525.net:3001/**/**',{
         "name": "马云",
     }
 }
-```
-> 根据请求参数，选择某个作者及其名下的模拟规则，详情查看[具体规则](https://github.com/JimMyLibs/mockApi/tree/master/app/rules/jim/url_fn)
-```
-// 作者: jim  规则: req_res
-// 使用方法: 将返回字段及其格式，以请求参数的形式发送给接口
-fetch('http://mock.91525.net:3001/index/all',{
-	"mock":{
-		"auth":"jim",
-		"rule":"url_fn"
-	}
-})
-// 响应信息
-{
-    "ret": "10000",
-    "message": "模拟数据",
-    "data": {
-        // 自己配置
-    }
-}
-```
----
-
-### 目录结构
-```
-├── app/        // 业务代码
-│   ├── index.js        // 接口配置
-│   └── rules/      // 规则目录
-│       ├── index.js        // 规则入口
-│       └── jim/        // 某规则负责人目录
-│           ├── index.js        // 该规则包入口
-│           ├── url_fn/     // 单条规则目录
-│           │   ├── index.js        // 该条规则入口
-│           │   └── rule.js     // 该条规则内容
-│           └── utils/      // 该规则包的工具包
-│               ├── api.js      // Mockjs Api一览表
-│               └── index.js        // 工具包内容
-├── index.js        // 程序入口lj
-├── LICENSE     // 开原协议
-├── node_modules/       // 依赖包
-├── package.json        // 依赖包
-└── README.md       // 说明文件
 ```
 ---
 ## 目前已支持字段
@@ -207,4 +172,53 @@ fetch('http://mock.91525.net:3001/index/all',{
 "guid":
 "id":
 "increment": 递增
+```
+
+
+
+
+---
+
+### 2. 使用规则二：自给自足
+
+> 根据请求参数，选择某个作者及其名下的模拟规则，详情查看[具体规则](https://github.com/JimMyLibs/mockApi/tree/master/app/rules/jim/url_fn)
+```
+// 作者: jim  规则: req_res
+// 使用方法: 将返回字段及其格式，以请求参数的形式发送给接口
+fetch('http://mock.91525.net:3001/index/all',{
+	"mock":{
+		"auth":"jim",
+		"rule":"url_fn"
+	}
+})
+// 响应信息
+{
+    "ret": "10000",
+    "message": "模拟数据",
+    "data": {
+        // 自己配置
+    }
+}
+```
+---
+
+## 目录结构
+```
+├── app/        // 业务代码
+│   ├── index.js        // 接口配置
+│   └── rules/      // 规则目录
+│       ├── index.js        // 规则入口
+│       └── jim/        // 某规则负责人目录
+│           ├── index.js        // 该规则包入口
+│           ├── url_fn/     // 单条规则目录
+│           │   ├── index.js        // 该条规则入口
+│           │   └── rule.js     // 该条规则内容
+│           └── utils/      // 该规则包的工具包
+│               ├── api.js      // Mockjs Api一览表
+│               └── index.js        // 工具包内容
+├── index.js        // 程序入口lj
+├── LICENSE     // 开原协议
+├── node_modules/       // 依赖包
+├── package.json        // 依赖包
+└── README.md       // 说明文件
 ```
