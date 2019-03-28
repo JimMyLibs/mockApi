@@ -77,7 +77,7 @@ const loop = (args, totalNum, curPage, pageSize, isInList = false) => {// 一次
                 if (item == 'totalNum') {// 总条数
                     totalNum = args[Object.entries(args[item])[0][0]] = Object.entries(args[item])[0][1];
                     delete args[item];
-                } else if (item == 'curPage') {// 总页码
+                } else if (item == 'curPage') {// 当前页
                     curPage = args[Object.entries(args[item])[0][0]] = Object.entries(args[item])[0][1];
                     delete args[item];
                 } else if (item == 'pageSize') {// 总页码

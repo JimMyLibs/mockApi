@@ -11,10 +11,25 @@ export const getRandom = (type) => {// 生成模拟数据: 数值类型模拟: �
         return getIdCard();
     }else if(type == 'icon'){
         return Random.image('64x64');
+    }else if(type == 'number'){
+        return Random.natural(0,100);
     }else if(type == 'detailAddress'){
         return Random.county(true) + ' ' + Random.cword(2,3) + '路' + Random.integer(0,100) + '号';
     }else if(type == 'dataImage' || type == 'base64'){
         return base64;
+    }else if(/^\[[^\[\]\,\s]+(,[^\[\]\,\s]+)*\]$/.test(type)){// 多中取一: [1,12,123,1234]
+        const arr = type.slice(1,-1).split(',')
+        return arr[Random.integer(0,arr.length-1)];
+    }else if(/\d{1,}(\.\d{1,})-\d{1,}(\.\d{1,})/.test(type)){// 随机数: 1.123-99.123456
+        const min = type.split('-')[0];
+        const max = type.split('-')[1];
+        const dotMin = min.toString().split('.')[1].length;
+        const dotMax = max.toString().split('.')[1].length;
+        return Random.float(parseInt(min), parseInt(max), dotMin, dotMax);
+    }else if(/(\d{1,})-(\d{1,})/.test(type)){// 随机数: 1-99
+        const min = type.split('-')[0];
+        const max = type.split('-')[1];
+        return Random.natural(min, max);
     }else if(regKeys.includes(type)){
         return getReg(type);
     }else{
@@ -22,7 +37,8 @@ export const getRandom = (type) => {// 生成模拟数据: 数值类型模拟: �
     }
 }
 
-export const getReg = (type)=>{
+
+export const getReg = (type)=>{// RandExp: 根据正则生成随机数据
     console.time('正则'+type)
     const result = new RandExp(reg[type]).gen();
     console.timeEnd('正则'+type)
@@ -30,7 +46,7 @@ export const getReg = (type)=>{
 }
 
 let getIdCardCount = 0;
-export const getIdCard = ()=>{
+export const getIdCard = ()=>{// RandExp: 身份证号码
     let idCard = new RandExp(reg.idCard).gen();
     if(regFn.checkID(idCard)){
         console.log('经过'+getIdCardCount+'次失败，才成功',idCard)
