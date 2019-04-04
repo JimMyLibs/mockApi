@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({
 
 // 设置允许跨域访问该服务.
 app.all('*', (req, res, next) => {
-    console.log('请求',new Date())
     // Access-Control-Allow-Headers ,可根据浏览器的F12查看,把对应的粘贴在这里就行
     res.header("Access-Control-Allow-Origin", "*")
     res.header('Access-Control-Allow-Headers', '*')
