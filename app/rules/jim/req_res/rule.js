@@ -30,12 +30,12 @@ const getArrRandom = (type, totalNum, curPage, pageSize) => {// 生成模拟数�
     console.log('getArrRandom______', type, totalNum, curPage, pageSize)
     totalNum = totalNum || Random.integer(0,100);
     if(totalNum && pageSize){
-        if(curPage == parseInt(totalNum / pageSize) + 1){
+        if(curPage == parseInt(totalNum / pageSize) + 1){// 最后一页
             return getMore(type).slice(0, parseInt(totalNum % pageSize))
-        }else if(curPage > parseInt(totalNum / pageSize) + 1){
+        }else if(curPage > parseInt(totalNum / pageSize) + 1){// 超出最后一页
             return getMore(type).slice(0, 0)
-        }else{
-            return getMore(type).slice(0, pageSize, pageSize)
+        }else{// 小于最后一页
+            return getMore(type,0,pageSize,pageSize)
         }
     }else{
         if(!pageSize){
