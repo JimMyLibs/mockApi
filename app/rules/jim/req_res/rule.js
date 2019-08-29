@@ -46,13 +46,13 @@ const getArrRandom = (type, totalNum, curPage, pageSize) => {// 生成模拟数�
 const loopArr = (arr, totalNum, curPage, pageSize) => {// 二次数组递归
     let item = arr[0];    
     if (isObject(item)) {// 对象
-        // console.log('对象2', item)
+        console.log('对象2', item)
         return getArrRandom(item, totalNum, curPage, pageSize)
     } else if (isArray(item)) {// 数组
-        // console.log('数组2', item)
+        console.log('数组2', item)
         return loopArr(item, totalNum, curPage, pageSize)
     } else {
-        // console.log('进来了2', item, !!Random[item])// 狸猫换太子，否则就变成二维数组了
+        console.log('进来了2', item, !!Random[item])// 狸猫换太子，否则就变成二维数组了
         return Random[item] ? getArrRandom(item, totalNum, curPage, pageSize) : [item]
     }
 }

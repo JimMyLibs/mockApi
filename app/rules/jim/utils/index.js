@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 import { isArray, isObject } from '../utils/isType'
+import { getRandom } from '../utils/getDiyData'
 const Random = Mock.Random;
 
 /*********************************** 错误码 ***********************************/
@@ -33,7 +34,7 @@ export const getMore = function (type, min = '', max = '', size=10) {
             if (isObject(item)) {// 对象
                 Object.keys(item).map(cell=>{
                     // console.log('getMore__________________________________对象', index, item, !!Random[item[cell]])
-                    item[cell] = Random[item[cell]] ? Random[item[cell]]() : item[cell];
+                    item[cell] = Random[item[cell]] ? Random[item[cell]]() : getRandom(item[cell]);
                 })
             } else if (isArray(item)) {// 数组
                 // console.log('getMore__________________________________数组', item)
