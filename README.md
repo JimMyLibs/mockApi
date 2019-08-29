@@ -54,6 +54,14 @@ fetch('http://mock.91525.net:3001/**/**',{
 
 ### 新增功能-20190829
 ```
+// 支持生成随机字数的中英文字符串
+"cnStr[100]: 生成100个以内随机个数的中文字符
+"enStr[100]: 生成100个以内随机个数的英文字符
+```
+![支持自定义codeNames&&msgNames](https://raw.githubusercontent.com/JimMyLibs/mockApi/master/public/img/20190829-codeName001.png)
+
+### 新增功能-20190829
+```
 支持自定义codeNames，包含：['code','resCode','result','errCode','ErrCode'];
 支持自定义msgNames，包含：['message','msg','errMsg','ErrMsg'];
 ```
