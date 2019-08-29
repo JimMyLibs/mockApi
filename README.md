@@ -58,7 +58,6 @@ fetch('http://mock.91525.net:3001/**/**',{
 "cnStr[100]: 生成100个以内随机个数的中文字符
 "enStr[100]: 生成100个以内随机个数的英文字符
 ```
-![支持自定义codeNames&&msgNames](https://raw.githubusercontent.com/JimMyLibs/mockApi/master/public/img/20190829-codeName001.png)
 
 ### 新增功能-20190829
 ```
