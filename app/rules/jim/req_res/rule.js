@@ -8,18 +8,18 @@ const Random = Mock.Random;
 
 // 配置API接口地址
 const example = {
-    getData: (res, data = {}, args = { respCode: '0000', message: '' }) => {
-        if (args.respCode == '0000') {
+    getData: (res, data = {}, args = { resCode: 0, message: '' }) => {
+        if (args.resCode == 0) {
             const msg = {
-                respCode: args.respCode,
+                resCode: args.resCode,
                 message: args.message ? ('模拟数据：' + args.message) : '模拟数据',
                 data,
             }
             res.send(msg)
         } else {
             const msg = {
-                respCode: args.respCode,
-                message: getErrMsg(args.respCode),
+                resCode: args.resCode,
+                message: getErrMsg(args.resCode),
                 data:{},
             }
             res.send(msg)
@@ -122,26 +122,44 @@ const loop = (args, totalNum, curPage, pageSize, isInList = false) => {// 一次
     })
     return args;
 }
+
+const getRepeatItems = function(){
+    const arr = [...arguments].reduce((sum,item)=>{
+        sum = [...sum,...item]
+        return sum;
+    },[])
+    let obj = {};
+    arr.map(item=>{
+        obj[item] = ++obj[item] || 0;
+    })
+    const repeatItems = Object.keys(obj).filter(item=>obj[item]>0);
+    return {
+        repeatCount: obj,
+        repeatItems,
+    }
+}
 export default {
     index: {
         default: (res, args) => {
             // console.log('args', args)
-            let argsInit = {
-                respCode: "0000",
-                message: "",
-                data:{},
-            }
-            if(args.respCode){
-                argsInit.respCode = args.respCode;
-                argsInit.message = args.message || '';
-                argsInit.data = args.data || {};
+            const codeNames = ['code','resCode','result','errCode','ErrCode'];
+            const msgNames = ['message','msg','errMsg','ErrMsg'];
+            const codeName = getRepeatItems(Object.keys(args),codeNames).repeatItems[0];
+            const msgName = getRepeatItems(Object.keys(args),msgNames).repeatItems[0];
+            // console.log(codeName,msgName)
+            let argsInit = {};
+            if(codeName){// codeName repeat
+                argsInit[codeName] = args[codeName] || 0;
             }else{
-                argsInit.data = args;
+                argsInit['code'] = 0;
             }
-            const { data } = argsInit;
-            const msg = loop(data);
-            // console.log('msg', msg)
-            example.getData(res, msg, argsInit)
+            if(msgName){// msgNames repeat
+                argsInit[msgName] = args[msgName] || '模拟数据';
+            }else{
+                argsInit['message'] = 0;
+            }
+            argsInit.data = loop(args.data || args);
+            res.send(argsInit)
         },
     }
 }

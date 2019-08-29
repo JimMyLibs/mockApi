@@ -52,6 +52,18 @@ fetch('http://mock.91525.net:3001/**/**',{
 ---
 ## 目前已支持字段
 
+### 新增功能-20190829
+```
+支持自定义codeNames，包含：['code','resCode','result','errCode','ErrCode'];
+支持自定义msgNames，包含：['message','msg','errMsg','ErrMsg'];
+```
+![支持自定义codeNames&&msgNames](https://raw.githubusercontent.com/JimMyLibs/mockApi/master/public/img/20190829-codeName001.png)
+
+### 新增功能-20190827
+```
+pagesize支持随机条数
+```
+
 ### 新增字段-20190328
 ```
 "1-10": 3, //  min-max之间随机正整数
